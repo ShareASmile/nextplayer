@@ -2,7 +2,9 @@ name: Android Build
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+      - dev
   pull_request:
 concurrency:
   group: build-${{ github.ref }}
@@ -105,10 +107,3 @@ jobs:
           disk-size: 6000M
           heap-size: 600M
           script: ./gradlew connectedCheck
-
-      - name: Upload test reports
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-reports-${{ matrix.api-level }}
-          path: '*/build/reports/androidTests'
